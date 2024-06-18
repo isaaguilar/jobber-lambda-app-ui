@@ -13,7 +13,8 @@ const JOBBER_APP_FUNCTION_URL: &'static str = std::env!("JOBBER_APP_FUNCTION_URL
 const JOBBER_OAUTH_HANDLER_FUNCTION_URL: &'static str =
     std::env!("JOBBER_OAUTH_HANDLER_FUNCTION_URL");
 const JOBBER_APP_CLIENT_ID: &'static str = std::env!("JOBBER_APP_CLIENT_ID");
-const JOBBER_APP_REDIRECT_URI: &'static str = std::env!("JOBBER_APP_REDIRECT_URL");
+const JOBBER_APP_REDIRECT_URI: &'static str = std::env!("JOBBER_APP_REDIRECT_URI");
+const JOBBER_APP_NAME: &'static str = std::env!("JOBBER_APP_NAME");
 
 #[derive(Default, Debug, Clone, Deserialize)]
 struct Auth {
@@ -89,9 +90,10 @@ fn homepage() -> Html {
                 let before = before.clone();
                 let after = after.clone();
                 let url = format!(
-                    "{}/?code={}&client_id={}&redirect_uri={}&state=",
+                    "{}/?code={}&app_name={}&client_id={}&redirect_uri={}&state=",
                     JOBBER_OAUTH_HANDLER_FUNCTION_URL,
                     code,
+                    JOBBER_APP_NAME,
                     JOBBER_APP_CLIENT_ID,
                     JOBBER_APP_REDIRECT_URI
                 );
