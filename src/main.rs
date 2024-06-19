@@ -1,3 +1,8 @@
+use std::alloc::System;
+
+#[global_allocator]
+static A: System = System;
+
 use chrono::NaiveDate;
 use gloo_console::log;
 use gloo_net::http::Request;
@@ -30,7 +35,7 @@ struct LambdaError {
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
-    #[at("/")]
+    #[at("/*")]
     Homepage,
 }
 
