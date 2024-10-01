@@ -35,8 +35,10 @@ struct LambdaError {
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
-    #[at("/*")]
+    #[at("/")]
     Homepage,
+    #[at("/*")]
+    HomepageAny,
 }
 
 #[function_component(Homepage)]
@@ -318,6 +320,11 @@ pub fn switch(routes: Route) -> Html {
                 <Homepage />
             </div>
         },
+        Route::HomepageAny => html! {
+            <div>
+                <Homepage />
+            </div>
+        }
     }
 }
 
