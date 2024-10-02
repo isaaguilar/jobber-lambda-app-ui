@@ -46,6 +46,8 @@ fn homepage() -> Html {
     let nav = use_navigator().unwrap();
     let loc = use_location().unwrap();
 
+    let disabled = use_state(|| false);
+
     let code = match loc.query::<Auth>() {
         Ok(s) => s.code,
         Err(_) => String::new(),
@@ -85,17 +87,21 @@ fn homepage() -> Html {
         let before = before_date_state.to_string();
         let after = after_date_state.to_string();
         let code = code.clone();
+        let disabled = disabled.clone();
         Callback::from(move |_| {
+            disabled.set(true);
             let window = window.clone();
             let nav = nav.clone();
             let before = before.clone();
             let after = after.clone();
             let code = code.clone();
+            let disabled = disabled.clone();
             wasm_bindgen_futures::spawn_local(async move {
                 let window = window.clone();
                 let nav = nav.clone();
                 let before = before.clone();
                 let after = after.clone();
+                disabled.set(true);
                 let url = format!(
                     "{}/?code={}&app_name={}&client_id={}&redirect_uri={}&state=",
                     JOBBER_OAUTH_HANDLER_FUNCTION_URL,
@@ -143,6 +149,7 @@ fn homepage() -> Html {
                         Ok(value) => {
                             let _ = window
                                 .alert_with_message(&format!("Error: {}", value.error_message));
+                            nav.push(&Route::Homepage);
                             return;
                         }
                         Err(_) => {
@@ -211,7 +218,7 @@ fn homepage() -> Html {
                 let json_jsvalue = wasm_bindgen::JsValue::from_str(&s);
                 let json_jsvalue_array = js_sys::Array::from_iter(std::iter::once(json_jsvalue));
                 let blob = web_sys::Blob::new_with_str_sequence(&json_jsvalue_array).unwrap();
-
+                disabled.set(false);
                 let url = match web_sys::Url::create_object_url_with_blob(&blob) {
                     Ok(url) => url,
                     Err(_) => {
@@ -300,7 +307,7 @@ fn homepage() -> Html {
                     </div>
                 </div>
                 <hr/>
-                <button class="btn btn-primary" onclick={onclick} >{"Download"}</button>
+                <button class="btn btn-primary" onclick={onclick} disabled={*disabled.clone()} >{"Download"}</button>
                 <br />
             </>
         }
