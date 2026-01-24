@@ -1,72 +1,49 @@
 # Jobber Lambda App UI
 
-A Yew/Rust WebAssembly frontend for Jobber OAuth integration. This UI can be used for multiple Jobber apps by configuring environment variables.
+A React/TypeScript frontend for Jobber OAuth integration. This UI can be used for multiple Jobber apps by configuring a runtime config file.
 
 ## Prerequisites
 
-- Rust toolchain
-- [Trunk](https://trunkrs.dev/) for building/serving
+- Node.js >= 18
 
-## Environment Variables
+## Configuration
 
-Set these environment variables before building:
+Copy the example config and fill in your values:
 
-| Variable | Description |
-|----------|-------------|
+```bash
+cp public/config.example.json public/config.json
+```
+
+Edit `public/config.json`:
+
+| Field | Description |
+|-------|-------------|
 | `JOBBER_OAUTH_HANDLER_FUNCTION_URL` | Lambda URL for OAuth handler |
-| `JOBBER_APP_FUNCTION_URL` | Lambda URL for the app's backend |
+| `JOBBER_APP_FUNCTION_URL` | Lambda URL for the app backend |
 | `JOBBER_APP_CLIENT_ID` | Jobber OAuth client ID |
 | `JOBBER_APP_REDIRECT_URI` | OAuth redirect URI |
 | `JOBBER_APP_NAME` | App name for OAuth handler |
+| `JOBBER_APP_TITLE` | Browser tab title (optional) |
 
 ## Development
 
 ```bash
-# Set environment variables (or source from .env file)
-export JOBBER_OAUTH_HANDLER_FUNCTION_URL=https://...
-export JOBBER_APP_FUNCTION_URL=http://localhost:8080
-export JOBBER_APP_CLIENT_ID=your-client-id
-export JOBBER_APP_REDIRECT_URI=https://your-app.example.com
-export JOBBER_APP_NAME=your-app-name
-
-# Serve locally
-trunk serve
+npm install
+npm run dev
 ```
 
 ## Deployment
 
-1. Source the environment variables for the target app:
+1. Build for production:
 
    ```bash
-   source .env
+   npm run build
    ```
 
-2. Build for release:
-
-   ```bash
-   trunk build --release
-   ```
-
-3. Deploy the `dist/` directory to S3:
+2. Deploy the `dist/` directory to your web server or S3:
 
    ```bash
    aws s3 sync dist/ s3://your-app-bucket/
    ```
 
-## React/Tailwind prototype
-
-- Location: [web](web) (keeps the Rust/Yew code intact while you try React)
-- Config: copy [web/public/config.example.json](web/public/config.example.json) to [web/public/config.json](web/public/config.json) and fill in your Lambda URLs and OAuth details
-- Run locally:
-
-   ```bash
-   npm install
-   npm run dev
-   ```
-
-- Build/preview:
-
-   ```bash
-   npm run build
-   npm run preview
-   ```
+3. Ensure `config.json` is present at the root of your deployed site.

@@ -32,7 +32,7 @@ const getInitialTheme = (): Theme => {
 
 const formatRangeLabel = (range?: DateRange) => {
   if (!range?.from || !range.to) return 'Select your dates';
-  return `${format(range.from, 'MMM d')} → ${format(range.to, 'MMM d, yyyy')}`;
+  return `${format(range.from, 'MMM d')} - ${format(range.to, 'MMM d, yyyy')}`;
 };
 
 // Get previous week's Sunday through Saturday (dynamic based on current date)
