@@ -3,3 +3,12 @@ target
 .vscode
 Cargo.lock
 dist
+node_modules
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+.vite
+dist-react
+web/dist
+web/node_modules
+.DS_Store

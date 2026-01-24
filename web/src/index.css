@@ -1,0 +1,118 @@
+@import 'react-day-picker/dist/style.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply font-body bg-white text-ink min-h-screen dark:bg-ink dark:text-sand;
+}
+
+.glass-panel {
+    @apply bg-white border border-slate/15 rounded-2xl shadow-subtle dark:bg-slate/60 dark:border-slate/50;
+}
+
+.action-button {
+    @apply px-4 py-2 rounded-full font-semibold transition-colors duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky;
+}
+
+.action-button.primary {
+    @apply bg-plum text-white hover:bg-plum-dark;
+}
+
+.action-button.secondary {
+    @apply bg-white text-ink border border-slate/20 hover:bg-sand/40 dark:bg-slate dark:text-sand dark:border-slate/60;
+}
+
+.loader {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 4px solid rgba(255, 255, 255, 0.12);
+    border-top-color: #2ea3f2;
+    border-right-color: #8d0e57;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* DayPicker overrides to feel like hotel check-in/out */
+.rdp {
+    --rdp-cell-size: 42px;
+    --rdp-accent-color: #8d0e57;
+    --rdp-accent-background-color: rgba(46, 163, 242, 0.14);
+    --rdp-range_middle-background-color: rgba(46, 163, 242, 0.14);
+    --rdp-range_middle-color: inherit;
+    --rdp-range_start-color: #fff;
+    --rdp-range_end-color: #fff;
+    --rdp-range_start-date-background-color: #8d0e57;
+    --rdp-range_end-date-background-color: #2ea3f2;
+    --rdp-outline: 2px solid #2ea3f2;
+    color: #2d3940;
+}
+
+.dark .rdp {
+    color: #e8e8ea;
+    --rdp-range_middle-background-color: rgba(141, 14, 87, 0.5);
+    --rdp-range_middle-color: #fff;
+}
+
+/* Legacy class names (v8) + new class names (v9) */
+.rdp-day_range_start,
+.rdp-day_range_end,
+.rdp-day_selected,
+.rdp-range_start .rdp-day_button,
+.rdp-range_end .rdp-day_button {
+    background: #2ea3f2 !important;
+    color: #fff !important;
+    border-radius: 9999px;
+}
+
+.rdp-range_start,
+.rdp-range_end {
+    background: #fff !important;
+}
+
+.dark .rdp-range_start,
+.dark .rdp-range_end {
+    background: rgba(45, 57, 64, 0.6) !important;
+}
+
+.rdp-day_range_middle,
+.rdp-range_middle {
+    background: rgba(46, 163, 242, 0.14);
+    color: inherit;
+}
+
+.dark .rdp-day_range_middle,
+.dark .rdp-range_middle {
+    background: rgba(141, 14, 87, 0.5) !important;
+}
+
+.dark .rdp-range_middle .rdp-day_button {
+    color: #fff !important;
+}
+
+.rdp-button:hover:not([disabled]) {
+    background: rgba(141, 14, 87, 0.08);
+}
+
+.dark .rdp-button:hover:not([disabled]) {
+    background: rgba(141, 14, 87, 0.16);
+}
+
+.rdp-caption_label {
+    @apply font-semibold text-plum dark:text-sand;
+}
+
+.rdp-weekday {
+    @apply font-semibold text-slate dark:text-sand/70;
+}
+
+.rdp-day_disabled {
+    @apply line-through opacity-40;
+}
